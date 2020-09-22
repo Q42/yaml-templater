@@ -4,7 +4,7 @@
 
 How to use:
 ```bash
-$ yaml_templater <file.yaml> <json-path-selector> -- <command including go expressions>
+$ yaml_templater <file.yaml> <json-path-selector> <command including go expressions>
 ```
 
 ## Example

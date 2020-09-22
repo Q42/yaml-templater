@@ -29,5 +29,4 @@ docker build -t main:latest .;
 docker build -t child:latest subdir;
 `, "\n")
   assert.Equal(t, output.String(), expectedOutput)
-  
 }

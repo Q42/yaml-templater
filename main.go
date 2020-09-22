@@ -12,6 +12,9 @@ import (
 func main() {
 
 	//get command line arguments
+	if len(os.Args) < 3 {
+		log.Fatalf("Please provide at least 2 arguments:\n\n$ yaml-templater [file.yaml] [template expression]")
+	}
 	yamlFile := os.Args[1]
 	jsonPath := os.Args[2]
 

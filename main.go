@@ -2,6 +2,7 @@ package main
 
 import (
 	"html/template"
+	"io"
 	"io/ioutil"
 	"log"
 	"os"
@@ -10,7 +11,6 @@ import (
 )
 
 func main() {
-
 	//get command line arguments
 	if len(os.Args) < 3 {
 		log.Fatalf("Please provide at least 2 arguments:\n\n$ yaml-templater [file.yaml] [template expression]")
@@ -18,13 +18,17 @@ func main() {
 	yamlFile := os.Args[1]
 	jsonPath := os.Args[2]
 
-	tmpl, err := template.New("temp").Parse(jsonPath)
+	//load yaml file
+	data, err := ioutil.ReadFile(yamlFile)
 	if err != nil {
 		log.Fatalf("error: %v", err)
 	}
 
-	//load yaml file
-	data, err := ioutil.ReadFile(yamlFile)
+	runTemplate(data, jsonPath, os.Stdout)
+}
+
+func runTemplate(data []byte, jsonPath string, dest io.Writer) {
+	tmpl, err := template.New("temp").Parse(jsonPath)
 	if err != nil {
 		log.Fatalf("error: %v", err)
 	}
@@ -36,5 +40,5 @@ func main() {
 		log.Fatalf("error: %v", err)
 	}
 
-	tmpl.Execute(os.Stdout, object)
+	tmpl.Execute(dest, object)
 }

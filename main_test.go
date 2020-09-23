@@ -22,11 +22,11 @@ var dockerTemplate = "{{range .dockerImages}}docker build -t {{.image}}:latest {
 
 func TestFixtureDockerImages(t *testing.T) {
 	output := bytes.NewBuffer(nil)
-  runTemplate([]byte(deployYaml)), dockerTemplate, output)
+	runTemplate([]byte(deployYaml), dockerTemplate, output)
 
-  expectedOutput := strings.TrimPrefix(`
+	expectedOutput := strings.TrimPrefix(`
 docker build -t main:latest .;
 docker build -t child:latest subdir;
 `, "\n")
-  assert.Equal(t, output.String(), expectedOutput)
+	assert.Equal(t, output.String(), expectedOutput)
 }
